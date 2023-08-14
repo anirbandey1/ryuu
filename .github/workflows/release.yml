@@ -21,9 +21,9 @@ jobs:
         go-version: '^1.18.1' # The Go version to download (if necessary) and use.
     - run: go version
     - name: Prepare
-      run: ./scripts/script.sh setup
+      run: ./scripts/linux.sh setup
     - name: Build
-      run: ./scripts/script.sh build
+      run: ./scripts/linux.sh build
     # - name: Release
     #   uses: docker://antonyurchenko/git-release:v5
     #   env:
