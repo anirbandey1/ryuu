@@ -57,10 +57,13 @@ jobs:
       - uses: actions/download-artifact@v3
 
       - name: Install dependencies
-        run: sudo apt-get update && sudo apt-get install -y gettext-base
+        run: | 
+          sudo apt-get update && sudo apt-get install -y gettext-base
+          sudo apt install -y tree
       - name: Public release
         run: |
           echo "Publishing to github release"
+          tree -L 3
           gh auth status
         
 
