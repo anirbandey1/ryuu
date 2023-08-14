@@ -53,13 +53,13 @@ jobs:
 
       - name: Rename artefacts
         run: | 
-          mv artefacts_linux/ryuu artefacts_linux/ryuu-linux
+          mv -v artefacts_linux/ryuu artefacts_linux/ryuu-linux
       - name: Public release
         run: |
           echo "Publishing to github release"
           tree -L 3
           gh release create latest || echo "Release creation failed, but continuing..." && true
-          gh release upload latest artefacts_linux/ryuu-linux
+          gh release upload --clobber latest artefacts_linux/ryuu-linux
 
       - name: Delete  artifacts
         uses: jimschubert/delete-artifacts-action@v1
