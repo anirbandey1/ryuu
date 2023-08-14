@@ -61,11 +61,19 @@ jobs:
           gh release create latest || echo "Release creation failed, but continuing..." && true
           gh release upload --clobber latest artefacts_linux/ryuu-linux
 
+        
+  cleanup:
+    runs-on: ubuntu-latest
+    needs: [build-linux, publish]
+    if: always()  # This ensures that cleanup runs even if dependent jobs fail
+    steps:
+      - name: Cleanup Begin
+        run: |
+          echo "Clean up begins"
+
       - name: Delete  artifacts
         uses: jimschubert/delete-artifacts-action@v1
         with:
           log_level: 'debug'
           min_bytes: '0'
           pattern: '.*'
-        
-
