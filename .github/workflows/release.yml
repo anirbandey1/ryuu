@@ -58,9 +58,7 @@ jobs:
         run: |
           echo "Publishing to github release"
           tree -L 3
-          gh release delete unkown -y
-          gh release delete latest -y
-          gh release create latest 
+          gh release create latest || echo "Release creation failed, but continuing..." && true
           gh release upload latest artefacts_linux/ryuu-linux
         
 
