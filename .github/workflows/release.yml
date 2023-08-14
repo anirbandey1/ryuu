@@ -64,6 +64,9 @@ jobs:
         
   cleanup:
     runs-on: ubuntu-latest
+    env:
+      GITHUB_REPOSITORY: ${{ github.repository }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     needs: [build-linux, publish]
     if: always()  # This ensures that cleanup runs even if dependent jobs fail
     steps:
