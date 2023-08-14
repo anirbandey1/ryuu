@@ -29,7 +29,7 @@ jobs:
         name: artefacts_linux
         path: ./ryuu
         if-no-files-found: error # 'warn' or 'ignore' are also available, defaults to `warn`
-        retention-days: 0
+        retention-days: 1
 
   publish:
     needs: [build-linux]
@@ -58,6 +58,8 @@ jobs:
         run: |
           echo "Publishing to github release"
           tree -L 3
+          gh release delete unkown -y
+          gh release delete latest -y
           gh release create latest 
           gh release upload latest artefacts_linux/ryuu-linux
         
