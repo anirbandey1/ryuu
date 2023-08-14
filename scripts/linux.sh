@@ -47,7 +47,7 @@ main() {
 			shift
 			_build "$@"
 			;;
-		(install-dependecies)
+		(install-dependencies)
 			shift
 			_install_dependencies "$@"
 			;;
