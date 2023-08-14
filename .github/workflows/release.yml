@@ -9,7 +9,7 @@ on:
     - "v[0-9]+.[0-9]+.[0-9]+"
 
 jobs:
-  build-job:
+  build-linux:
     runs-on: ubuntu-22.04
 
     steps:
@@ -38,5 +38,29 @@ jobs:
     #   with:
     #     args: |
     #         build_linux/*.deb
+    #
+    #
 
+  publish:
+    needs: [build-linux]
+    runs-on: ubuntu-latest
+    env:
+      GH_REPO: ${{ github.repository }}
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    permissions:
+      contents: write
+    steps:
+      # Must perform checkout first, since it deletes the target directory
+      # before running, and would therefore delete the downloaded artifacts
+      - uses: actions/checkout@v3
+
+      - uses: actions/download-artifact@v3
+
+      - name: Install dependencies
+        run: sudo apt-get update && sudo apt-get install -y gettext-base
+      - name: Public release
+        run: |
+          echo "Publishing to github release"
+          gh auth status
+        
 
