@@ -13,33 +13,23 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
-    # - name: Dependecies
-    #   run : sudo apt update && sudo apt install -y libgl1 ffmpeg libsm6 libxext6 libegl1 '^libxcb.*-dev' libx11-xcb-dev libglu1-mesa-dev libxrender-dev libxi-dev libxkbcommon-dev libxkbcommon-x11-dev
     - uses: actions/checkout@v3
     - uses: actions/setup-go@v4
       with:
         go-version: '^1.18.1' # The Go version to download (if necessary) and use.
     - run: go version
-    - name: Prepare
+    - name: Dependecies
+      run: ./scripts/linux.sh install-dependencies
+    - name: Setup
       run: ./scripts/linux.sh setup
     - name: Build
       run: ./scripts/linux.sh build
     - uses: actions/upload-artifact@v3
       with:
-        name: ryuu_linux
+        name: artefacts_linux
         path: ./ryuu
         if-no-files-found: error # 'warn' or 'ignore' are also available, defaults to `warn`
         retention-days: 1
-
-    # - name: Release
-    #   uses: docker://antonyurchenko/git-release:v5
-    #   env:
-    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    #   with:
-    #     args: |
-    #         build_linux/*.deb
-    #
-    #
 
   publish:
     needs: [build-linux]
@@ -64,6 +54,7 @@ jobs:
         run: |
           echo "Publishing to github release"
           tree -L 3
-          gh auth status
+          gh release create latest 
+          gh release upload latest artefacts_linux/ryuu
         
 

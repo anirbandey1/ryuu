@@ -7,6 +7,8 @@ linux.sh
 
 Choose one of the available commands:
 	build
+	setup
+	install-dependecies
 	help | --help | -h
 	
 EOF
@@ -20,6 +22,9 @@ if [ $# -eq 0 ]; then
 	exit
 fi
 
+_install_dependencies() {
+	echo "Install dependencies in Linux"
+}
 
 _setup(){
 	echo "Setup in Linux"
@@ -41,6 +46,10 @@ main() {
 		(build)
 			shift
 			_build "$@"
+			;;
+		(install-dependecies)
+			shift
+			_install_dependencies "$@"
 			;;
 		(setup)
 			shift
