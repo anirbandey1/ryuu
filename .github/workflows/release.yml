@@ -60,5 +60,12 @@ jobs:
           tree -L 3
           gh release create latest || echo "Release creation failed, but continuing..." && true
           gh release upload latest artefacts_linux/ryuu-linux
+
+      - name: Delete  artifacts
+        uses: jimschubert/delete-artifacts-action@v1
+        with:
+          log_level: 'debug'
+          min_bytes: '0'
+          pattern: '.*'
         
 
