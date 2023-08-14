@@ -24,6 +24,13 @@ jobs:
       run: ./scripts/linux.sh setup
     - name: Build
       run: ./scripts/linux.sh build
+    - uses: actions/upload-artifact@v3
+      with:
+        name: ryuu_linux
+        path: ./ryuu
+        if-no-files-found: error # 'warn' or 'ignore' are also available, defaults to `warn`
+        retention-days: 1
+
     # - name: Release
     #   uses: docker://antonyurchenko/git-release:v5
     #   env:
