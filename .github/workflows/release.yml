@@ -29,7 +29,7 @@ jobs:
         name: artefacts_linux
         path: ./ryuu
         if-no-files-found: error # 'warn' or 'ignore' are also available, defaults to `warn`
-        retention-days: 1
+        retention-days: 0
 
   publish:
     needs: [build-linux]
@@ -50,11 +50,15 @@ jobs:
         run: | 
           sudo apt-get update && sudo apt-get install -y gettext-base
           sudo apt install -y tree
+
+      - name: Rename artefacts
+        run: | 
+          mv artefacts_linux/ryuu artefacts_linux/ryuu-linux
       - name: Public release
         run: |
           echo "Publishing to github release"
           tree -L 3
           gh release create latest 
-          gh release upload latest artefacts_linux/ryuu
+          gh release upload latest artefacts_linux/ryuu-linux
         
 
