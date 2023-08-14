@@ -1,0 +1,35 @@
+name: release
+
+on:
+  push:
+    branches:
+      - main
+      - master
+    tags:
+    - "v[0-9]+.[0-9]+.[0-9]+"
+
+jobs:
+  build-job:
+    runs-on: ubuntu-22.04
+
+    steps:
+    # - name: Dependecies
+    #   run : sudo apt update && sudo apt install -y libgl1 ffmpeg libsm6 libxext6 libegl1 '^libxcb.*-dev' libx11-xcb-dev libglu1-mesa-dev libxrender-dev libxi-dev libxkbcommon-dev libxkbcommon-x11-dev
+    - uses: actions/checkout@v3
+    - uses: actions/setup-go@v4
+      with:
+        go-version: '^1.18.1' # The Go version to download (if necessary) and use.
+    - run: go version
+    - name: Prepare
+      run: ./scripts/script.sh setup
+    - name: Build
+      run: ./scripts/script.sh build
+    # - name: Release
+    #   uses: docker://antonyurchenko/git-release:v5
+    #   env:
+    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    #   with:
+    #     args: |
+    #         build_linux/*.deb
+
+
