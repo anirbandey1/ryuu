@@ -64,19 +64,18 @@ jobs:
         
   cleanup:
     runs-on: ubuntu-latest
-    env:
-      GITHUB_REPOSITORY: ${{ github.repository }}
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    # env:
+    #   GITHUB_REPOSITORY: ${{ github.repository }}
+    #   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     needs: [build-linux, publish]
     if: always()  # This ensures that cleanup runs even if dependent jobs fail
     steps:
       - name: Cleanup Begin
         run: |
           echo "Clean up begins"
-
-      - name: Delete  artifacts
-        uses: jimschubert/delete-artifacts-action@v1
+      - uses: geekyeggo/delete-artifact@v2
         with:
-          log_level: 'debug'
-          min_bytes: '0'
-          pattern: '.*'
+          name: |
+              .*
+              artifacts-*
+
