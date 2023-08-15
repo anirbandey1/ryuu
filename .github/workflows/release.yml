@@ -90,10 +90,16 @@ jobs:
     if: always()  # This ensures that cleanup runs even if dependent jobs fail
 
     steps:
-    - name: Remove old artifacts
-      uses: c-hive/gha-remove-artifacts@v1
+
+    - uses: geekyeggo/delete-artifact@v2
       with:
-        age: '0 second' # '<number> <unit>', e.g. 5 days, 2 years, 90 seconds, parsed by Moment.js
-        # Optional inputs
-        # skip-tags: true
-        # skip-recent: 5
+          name: |
+              artifact*
+              .*
+          failOnError: false
+
+
+    # - name: Remove old artifacts
+    #   uses: c-hive/gha-remove-artifacts@v1
+    #   with:
+    #     age: '0 second' # '<number> <unit>', e.g. 5 days, 2 years, 90 seconds, parsed by Moment.js
