@@ -76,12 +76,14 @@ jobs:
           gh release create $TAG_NAME || echo "Release creation failed, but continuing..." && true
           gh release upload --clobber $TAG_NAME artefacts_linux/*
 
+
+
         
   cleanup:
     runs-on: ubuntu-latest
-    # env:
-    #   GITHUB_REPOSITORY: ${{ github.repository }}
-    #   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    env:
+      GITHUB_REPOSITORY: ${{ github.repository }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     needs: [build-linux, publish]
     if: always()  # This ensures that cleanup runs even if dependent jobs fail
     steps:
@@ -89,3 +91,10 @@ jobs:
         run: |
           echo "Clean up begins"
 
+      - name: Remove old artifacts
+        uses: c-hive/gha-remove-artifacts@v1
+        with:
+          age: '2 seconds' # '<number> <unit>', e.g. 5 days, 2 years, 90 seconds, parsed by Moment.js
+          # Optional inputs
+          # skip-tags: true
+          # skip-recent: 5
