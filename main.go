@@ -8,6 +8,21 @@ import (
 )
 
 
+func help() {
+    help_string := `
+ryuu
+
+Choose one of the available commands
+    install
+    search
+    help | --help | -h
+
+    `
+
+    fmt.Println(help_string)
+
+}
+
 func main()  {
     
 
@@ -21,12 +36,14 @@ func main()  {
         firstNonFlagArg = args[0]
 
     }else {
-        fmt.Println("No non-flag argument provided")
+        // fmt.Println("No non-flag argument provided")
+        help()
+        return
     }
 
     switch firstNonFlagArg {
         case "search":
-            fmt.Println("Search")
+            // fmt.Println("Search")
             if len(args) >= 2{
                 fmt.Printf("Search : %s \n",args[1])
                 repos.SearchAppimage(args[1])
@@ -34,13 +51,14 @@ func main()  {
                 fmt.Println("Please provide the name of the app you are searching for")
             }
         case "install":
-            fmt.Println("Install")
+            fmt.Println("install")
+        case "help":
+            fmt.Println("help")
         default:
-            fmt.Println("Please provide a valid non-flag argument")
+            // fmt.Println("Please provide a valid argumen")
+            help()
+            return 
 
     }
-
-
-
     
 }
