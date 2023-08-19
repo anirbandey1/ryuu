@@ -32,7 +32,23 @@ In UNIX-like systems, most packages can be installed using a standard package ma
 
 </div>
 
-## Quick Start
+## Getting Started
+
+### Installation
+
+#### Linux
+
+On Debian/Ubuntu
+```sh
+git clone https://github.com/anirbandey1/ryuu.git
+cd ryuu
+./scripts/linux.sh install
+```
+
+#### Windows
+
+Download the application from the
+<a href="https://github.com/anirbandey1/ryuu/releases/">releases section</a>
 
 ## Development
 
