@@ -40,9 +40,8 @@ In UNIX-like systems, most packages can be installed using a standard package ma
 
 On Debian/Ubuntu
 ```sh
-git clone https://github.com/anirbandey1/ryuu.git
-cd ryuu
-./scripts/linux.sh install
+cd $(mktemp -d) &&  curl -LO https://github.com/anirbandey1/ryuu/releases/download/stable/ryuu-linux  && sudo install -Dm 755 ryuu-linux /usr/local/bin/ryuu
+
 ```
 
 #### Windows
